@@ -1,26 +1,67 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <com.ogaclejapan.smarttablayout.SmartTabLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/viewpagertab"
-        android:background="@color/primary"
+
+
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tab_height"
-        app:stl_defaultTabTextColor="@color/white"
-        app:stl_defaultTabTextHorizontalPadding="24dp"
-        app:stl_indicatorColor="@color/accent"
-        app:stl_indicatorInterpolation="linear"
-        app:stl_indicatorThickness="3dp"
-        app:stl_titleOffset="auto_center"
-        app:stl_underlineThickness="1dp" />
+        android:layout_height="match_parent">
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/primary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+
+        <RelativeLayout
+            android:paddingTop="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.ogaclejapan.smarttablayout.SmartTabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/viewpagertab"
+                android:background="@color/primary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_height"
+                app:stl_defaultTabTextColor="@color/white"
+                app:stl_defaultTabTextHorizontalPadding="24dp"
+                app:stl_indicatorColor="@color/accent"
+                app:stl_indicatorInterpolation="linear"
+                app:stl_indicatorThickness="3dp"
+                app:stl_titleOffset="auto_center"
+                app:stl_underlineThickness="1dp" />
+
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/viewpagertab" />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/viewpagertab" />
-</RelativeLayout>
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/nav_back"
+        app:menu="@menu/drawer_view"
+        app:headerLayout="@layout/nav_header"
+        />
+
+
+</android.support.v4.widget.DrawerLayout>
