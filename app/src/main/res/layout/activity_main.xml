@@ -16,13 +16,16 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:paddingTop="5dp"
+            android:layout_height="50dp"
             android:background="@color/primary"
+            app:title="Wallboo"
+            app:titleTextColor="@color/white"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
 
         <RelativeLayout
-            android:paddingTop="60dp"
+            android:paddingTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >

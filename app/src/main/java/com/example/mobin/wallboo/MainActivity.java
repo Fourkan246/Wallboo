@@ -8,8 +8,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -25,9 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
 
+        /// tool bar add r sheita action bar er feature kisu support kora
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -59,11 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add(R.string.titleA, DemoFragment.class)
                 .add(R.string.titleB, DemoFragment.class)
-                .add(R.string.titleB, DemoFragment.class)
-                .add(R.string.titleB, DemoFragment.class)
-                .add(R.string.titleB, DemoFragment.class)
-                .add(R.string.titleB, DemoFragment.class)
-                .add(R.string.titleB, DemoFragment.class)
+                .add(R.string.titleC, DemoFragment.class)
+                .add(R.string.titleD, DemoFragment.class)
                 .create());
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -86,5 +92,41 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+/// Title bar inflate kore search create kore
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuItem mSearch = menu.findItem(R.id.action_search);
+        SearchView mSearchView = (SearchView) mSearch.getActionView();
+        mSearchView.setQueryHint("Search");
+
+
+
+        /// Typing in the search view
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            /// Type shesh e Enter marle
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Toast.makeText(getApplicationContext(),query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            /// Every character likhle
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //     mAdapter.getFilter().filter(newText);
+                Toast.makeText(getApplicationContext(),newText, Toast.LENGTH_LONG).show();
+                return true;
+            }
+
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
 }

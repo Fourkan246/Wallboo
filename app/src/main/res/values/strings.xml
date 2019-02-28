@@ -1,8 +1,23 @@
 <resources>
     <string name="app_name">Wallboo</string>
-    <string name="titleA">Wallboo</string>
-    <string name="titleB">Wallboo</string>
+    <string name="titleA">Featured</string>
+    <string name="titleB">Categories</string>
+    <string name="titleC">3D Pictures</string>
+    <string name="titleD">Live Wallpapers</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="Months">
+    <item>January</item>
+    <item>February</item>
+    <item>March</item>
+    <item>April</item>
+    <item>May</item>
+    <item>June</item>
+    <item>July</item>
+    </string-array>
+
+
 </resources>
