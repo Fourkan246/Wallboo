@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="demo_back">#092E4A</color>
+
     <color name="primary">#EF5560</color>
 
     <color name="top_stat">#3C515C</color>

@@ -34,19 +34,18 @@ public class DemoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_demo, container, false);
 
         RecyclerView list = view.findViewById(R.id.list);
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(), 3);
-
-        gridLayoutManager.generateLayoutParams(new GridLayoutManager.LayoutParams(30, 30));
-
-        list.setLayoutManager(gridLayoutManager);
+        list.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         ImageAdapter imageAdapter = new ImageAdapter(new ImageAdapter.Listener() {
             @Override
             public void onImageClicked(View view) {
+
+                Toast.makeText(getContext(), "hello, keep out", Toast.LENGTH_SHORT).show();
+
                 transition(view);
             }
         });
+        list.setAdapter(imageAdapter);
 
         list.setAdapter(imageAdapter);
 
@@ -57,7 +56,7 @@ public class DemoFragment extends Fragment {
 
         if (Build.VERSION.SDK_INT < 21) {
 
-            Toast.makeText(this.getContext(), "21+ only, keep out", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this.getContext(), "21+ only, keep out", Toast.LENGTH_SHORT).show();
 
         } else {
 
