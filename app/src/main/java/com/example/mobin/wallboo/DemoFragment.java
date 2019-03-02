@@ -42,15 +42,10 @@ public class DemoFragment extends Fragment {
         list.setLayoutManager(gridLayoutManager);
 
         ImageAdapter imageAdapter = new ImageAdapter(new ImageAdapter.Listener() {
-
             @Override
-
             public void onImageClicked(View view) {
-
                 transition(view);
-
             }
-
         });
 
         list.setAdapter(imageAdapter);

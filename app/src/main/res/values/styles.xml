@@ -1,17 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
-
-        <item name="android:windowActionBarOverlay">true</item>
-
-
+        <item name="android:windowActionBarOverlay">false</item>
         <item name="windowNoTitle">true</item>
 
-
-
         <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/nav_bar_color</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

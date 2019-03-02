@@ -73,5 +73,4 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageViewHolder> {
         void onImageClicked(View view);
 
     }
-
 }

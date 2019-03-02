@@ -35,6 +35,7 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
 }
 
 configurations.all {

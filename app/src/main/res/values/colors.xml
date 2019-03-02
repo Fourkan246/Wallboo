@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="primary">#3C515C</color>
+    <color name="primary">#EF5560</color>
+
+    <color name="top_stat">#3C515C</color>
 
     <color name="primary_dark">#142E3C</color>
 
@@ -45,6 +47,7 @@
     <color name="green_500">#4CAF50</color>
 
     <color name="light_green_500">#8BC34A</color>
+    <color name="nav_bar_color">#00B8D4</color>
 
 
     <integer-array name="custom_tab_colors">

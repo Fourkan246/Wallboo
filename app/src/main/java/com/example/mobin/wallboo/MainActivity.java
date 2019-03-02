@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 
 import com.google.android.material.navigation.NavigationView;
+import com.jaeger.library.StatusBarUtil;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -31,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+        StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, getResources().getColor(R.color.primary));
 
 
         /// tool bar add r sheita action bar er feature kisu support kora
@@ -81,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -94,8 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-/// Title bar inflate kore search create kore
+    /// Title bar inflate kore search create kore
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -103,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         MenuItem mSearch = menu.findItem(R.id.action_search);
         SearchView mSearchView = (SearchView) mSearch.getActionView();
         mSearchView.setQueryHint("Search");
-
 
 
         /// Typing in the search view
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //     mAdapter.getFilter().filter(newText);
-                Toast.makeText(getApplicationContext(),newText, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), newText, Toast.LENGTH_LONG).show();
                 return true;
             }
 
