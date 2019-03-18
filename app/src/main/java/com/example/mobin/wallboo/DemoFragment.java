@@ -67,8 +67,8 @@ public class DemoFragment extends Fragment {
                 //startImagePagerActivity(position);
                 Toast.makeText(getActivity(),""+position, Toast.LENGTH_LONG).show();
 
-                //Intent intent = new Intent(getActivity(), ShopActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getActivity(), ShopActivity.class);
+                startActivity(intent);
 
             }
         });
