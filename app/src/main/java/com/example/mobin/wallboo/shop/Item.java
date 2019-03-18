@@ -9,9 +9,9 @@ public class Item {
     private final int id;
     private final String name;
     private final String price;
-    private final int image;
+    private final String image;
 
-    public Item(int id, String name, String price, int image) {
+    public Item(int id, String name, String price, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -30,7 +30,7 @@ public class Item {
         return price;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 }

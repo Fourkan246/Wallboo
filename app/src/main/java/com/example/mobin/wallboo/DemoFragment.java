@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,23 +18,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mobin.wallboo.shop.ShopActivity;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -65,9 +55,10 @@ public class DemoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //startImagePagerActivity(position);
-                Toast.makeText(getActivity(),""+position, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getActivity(), ShopActivity.class);
+                intent.putExtra("position", position);
                 startActivity(intent);
 
             }
@@ -75,8 +66,6 @@ public class DemoFragment extends Fragment {
 
         return rootView;
     }
-
-
 
 
     private static class ImageAdapter extends BaseAdapter {
@@ -163,7 +152,6 @@ public class DemoFragment extends Fragment {
         ImageView imageView;
         ProgressBar progressBar;
     }
-
 
 
     private void transition(View view) {

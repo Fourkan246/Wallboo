@@ -1,24 +1,25 @@
 package com.example.mobin.wallboo.shop;
 
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mobin.wallboo.DiscreteScrollViewOptions;
+import com.example.mobin.wallboo.Constants;
+import com.example.mobin.wallboo.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.yarolegovich.discretescrollview.DSVOrientation;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
-import com.example.mobin.wallboo.R;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by yarolegovich on 07.03.2017.
@@ -27,7 +28,7 @@ import java.util.List;
 public class ShopActivity extends AppCompatActivity implements DiscreteScrollView.OnItemChangedListener,
         View.OnClickListener {
 
-    private List<Item> data;
+    private List<Item> data = new ArrayList<>();
     private Shop shop;
 
     private TextView currentItemName;
@@ -36,24 +37,36 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
     private DiscreteScrollView itemPicker;
     private InfiniteScrollAdapter infiniteAdapter;
 
+    Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
+        intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+        int pos = (int) bundle.get("position");
+
         currentItemName = (TextView) findViewById(R.id.item_name);
         currentItemPrice = (TextView) findViewById(R.id.item_price);
         rateItemButton = (ImageView) findViewById(R.id.item_btn_rate);
 
         shop = Shop.get();
-        data = shop.getData();
-        itemPicker = (DiscreteScrollView) findViewById(R.id.item_picker);
+//        data = shop.getData();
+
+        for (int i = pos; i < Constants.IMAGES.length && i < pos + 20; i++) {
+            data.add(new Item(1, "abcd", "120$", Constants.IMAGES[i]));
+        }
+
+        itemPicker = findViewById(R.id.item_picker);
         itemPicker.setOrientation(DSVOrientation.HORIZONTAL);
         itemPicker.addOnItemChangedListener(this);
+//        itemPicker.setOverScrollEnabled(false);
+//        itemPicker.set
         infiniteAdapter = InfiniteScrollAdapter.wrap(new ShopAdapter(data));
         itemPicker.setAdapter(infiniteAdapter);
-        itemPicker.setItemTransitionTimeMillis(DiscreteScrollViewOptions.getTransitionTime());
+        itemPicker.setItemTransitionTimeMillis(150);
         itemPicker.setItemTransformer(new ScaleTransformer.Builder()
                 .setMinScale(0.8f)
                 .build());
@@ -65,29 +78,29 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
         findViewById(R.id.item_btn_comment).setOnClickListener(this);
 
         findViewById(R.id.home).setOnClickListener(this);
-        findViewById(R.id.btn_smooth_scroll).setOnClickListener(this);
-        findViewById(R.id.btn_transition_time).setOnClickListener(this);
+//        findViewById(R.id.btn_smooth_scroll).setOnClickListener(this);
+//        findViewById(R.id.btn_transition_time).setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.item_btn_rate:
-                int realPosition = infiniteAdapter.getRealPosition(itemPicker.getCurrentItem());
-                Item current = data.get(realPosition);
-                shop.setRated(current.getId(), !shop.isRated(current.getId()));
-                changeRateButtonState(current);
-                break;
+//            case R.id.item_btn_rate:
+//                int realPosition = infiniteAdapter.getRealPosition(itemPicker.getCurrentItem());
+//                Item current = data.get(realPosition);
+//                shop.setRated(current.getId(), !shop.isRated(current.getId()));
+//                changeRateButtonState(current);
+//                break;
             case R.id.home:
                 finish();
                 break;
-            case R.id.btn_transition_time:
-                DiscreteScrollViewOptions.configureTransitionTime(itemPicker);
-                break;
-            case R.id.btn_smooth_scroll:
-                DiscreteScrollViewOptions.smoothScrollToUserSelectedPosition(itemPicker, v);
-                break;
+//            case R.id.btn_transition_time:
+//                DiscreteScrollViewOptions.configureTransitionTime(itemPicker);
+//                break;
+//            case R.id.btn_smooth_scroll:
+//                DiscreteScrollViewOptions.smoothScrollToUserSelectedPosition(itemPicker, v);
+//                break;
             default:
                 showUnsupportedSnackBar();
                 break;
@@ -101,13 +114,13 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
     }
 
     private void changeRateButtonState(Item item) {
-        if (shop.isRated(item.getId())) {
-            rateItemButton.setImageResource(R.drawable.ic_star_black_24dp);
-            rateItemButton.setColorFilter(ContextCompat.getColor(this, R.color.shopRatedStar));
-        } else {
-            rateItemButton.setImageResource(R.drawable.ic_star_border_black_24dp);
-            rateItemButton.setColorFilter(ContextCompat.getColor(this, R.color.shopSecondary));
-        }
+//        if (shop.isRated(item.getId())) {
+//            rateItemButton.setImageResource(R.drawable.ic_star_black_24dp);
+//            rateItemButton.setColorFilter(ContextCompat.getColor(this, R.color.shopRatedStar));
+//        } else {
+//            rateItemButton.setImageResource(R.drawable.ic_star_border_black_24dp);
+//            rateItemButton.setColorFilter(ContextCompat.getColor(this, R.color.shopSecondary));
+//        }
     }
 
     @Override
