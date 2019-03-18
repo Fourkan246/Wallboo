@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mobin.wallboo.Constants;
 import com.example.mobin.wallboo.R;
 /**
  * Created by yarolegovich on 07.03.2017.
@@ -35,6 +37,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
         Glide.with(holder.itemView.getContext())
                 .load(data.get(position).getImage())
                 .into(holder.image);
+
     }
 
     @Override

@@ -55,7 +55,7 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
         shop = Shop.get();
 //        data = shop.getData();
 
-        for (int i = pos; i < Constants.IMAGES.length && i < pos + 20; i++) {
+        for (int i = pos; i < Constants.IMAGES.length && i < pos + 50 ; i++) {
             data.add(new Item(1, "abcd", "120$", Constants.IMAGES[i]));
         }
 
