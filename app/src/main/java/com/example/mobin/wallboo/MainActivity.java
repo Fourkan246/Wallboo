@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.jaeger.library.StatusBarUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, getResources().getColor(R.color.primary));
 
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
 
         /// tool bar add r sheita action bar er feature kisu support kora
         Toolbar toolbar = findViewById(R.id.toolbar);

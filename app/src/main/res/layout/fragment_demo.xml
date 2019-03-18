@@ -5,11 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".DemoFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/list"
-        android:background="@color/white"
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:horizontalSpacing="2dip"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dip"
+        android:padding="2dip"/>
+
 
 </FrameLayout>

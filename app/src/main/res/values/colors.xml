@@ -52,6 +52,24 @@
     <color name="nav_bar_color">#00B8D4</color>
 
 
+
+
+
+
+
+
+
+    <color name="grayIconTint">#727272</color>
+    <color name="shopAccent">#84ceca</color>
+    <color name="shopSecondary">#727272</color>
+    <color name="shopRatedStar">#ffeb5a</color>
+    <color name="shopFabRipple">#51b2ac</color>
+
+
+
+
+
+
     <integer-array name="custom_tab_colors">
 
         <item>@color/light_blue_500</item>
