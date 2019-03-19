@@ -6,13 +6,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.mobin.wallboo.R;
 
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobin.wallboo.Constants;
-import com.example.mobin.wallboo.R;
 /**
  * Created by yarolegovich on 07.03.2017.
  */
@@ -25,6 +25,8 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
         this.data = data;
     }
 
+//    private int position = 0;
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -34,11 +36,18 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         Glide.with(holder.itemView.getContext())
                 .load(data.get(position).getImage())
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .skipMemoryCache(false)
                 .into(holder.image);
-
+//        this.position = position;
     }
+
+//    public int getPosition() {
+//        return position;
+//    }
 
     @Override
     public int getItemCount() {

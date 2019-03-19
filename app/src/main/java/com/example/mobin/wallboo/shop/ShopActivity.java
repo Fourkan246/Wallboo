@@ -1,14 +1,23 @@
 package com.example.mobin.wallboo.shop;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.mobin.wallboo.Blurrer;
 import com.example.mobin.wallboo.Constants;
 import com.example.mobin.wallboo.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.jaeger.library.StatusBarUtil;
 import com.yarolegovich.discretescrollview.DSVOrientation;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
@@ -44,6 +53,9 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
+        StatusBarUtil.setTranslucent(this);
+
+
         intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         int pos = (int) bundle.get("position");
@@ -55,7 +67,7 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
         shop = Shop.get();
 //        data = shop.getData();
 
-        for (int i = pos; i < Constants.IMAGES.length && i < pos + 50 ; i++) {
+        for (int i = pos; i < Constants.IMAGES.length && i < pos + 50; i++) {
             data.add(new Item(1, "abcd", "120$", Constants.IMAGES[i]));
         }
 
@@ -127,6 +139,37 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
     public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int position) {
         int positionInDataSet = infiniteAdapter.getRealPosition(position);
         onItemChanged(data.get(positionInDataSet));
+        String path = data.get(positionInDataSet).getImage();
+
+        Handler handler = new Handler(this.getMainLooper());
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                backDraw(path);
+            }
+        };
+        handler.post(runnable);
+
+//        findViewById(R.id.draw_here).setBackgroundDrawable(new BitmapDrawable());
+    }
+
+    private void backDraw(String path) {
+//        findViewById(R.id.item_picker).get
+        Glide.with(this.getApplicationContext())
+                .load(path)
+                .asBitmap()
+                .centerCrop()
+                .thumbnail(.1f)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .skipMemoryCache(false)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        Bitmap bitmap = Blurrer.blur(getApplicationContext(), resource);
+                        findViewById(R.id.draw_here).setBackground(new BitmapDrawable(resource));
+//                        getApplicationContext().getResources().getDrawable()
+                    }
+                });
     }
 
     private void showUnsupportedSnackBar() {
