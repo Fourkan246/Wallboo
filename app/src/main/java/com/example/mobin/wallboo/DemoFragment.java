@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.mobin.wallboo.shop.ShopActivity;
+import com.example.mobin.wallboo.WallpaperPreviewList.WallpaperShowActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -57,7 +57,7 @@ public class DemoFragment extends Fragment {
                 //startImagePagerActivity(position);
                 Toast.makeText(getActivity(), "" + position, Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(getActivity(), ShopActivity.class);
+                Intent intent = new Intent(getActivity(), WallpaperShowActivity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
 

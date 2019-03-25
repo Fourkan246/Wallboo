@@ -1,4 +1,4 @@
-package com.example.mobin.wallboo.shop;
+package com.example.mobin.wallboo.WallpaperPreviewList;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by yarolegovich on 07.03.2017.
  */
 
-public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
+public class WallpaperShowAdapter extends RecyclerView.Adapter<WallpaperShowAdapter.ViewHolder> {
 
     private List<Item> data;
 
-    public ShopAdapter(List<Item> data) {
+    public WallpaperShowAdapter(List<Item> data) {
         this.data = data;
     }
 

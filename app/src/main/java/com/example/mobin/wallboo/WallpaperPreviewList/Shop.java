@@ -1,4 +1,4 @@
-package com.example.mobin.wallboo.shop;
+package com.example.mobin.wallboo.WallpaperPreviewList;
 
 
 import java.util.Arrays;

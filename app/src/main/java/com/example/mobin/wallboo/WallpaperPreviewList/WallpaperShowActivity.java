@@ -1,5 +1,9 @@
-package com.example.mobin.wallboo.shop;
+package com.example.mobin.wallboo.WallpaperPreviewList;
 
+import android.app.WallpaperManager;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,14 +12,16 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.example.mobin.wallboo.Blurrer;
 import com.example.mobin.wallboo.Constants;
+import com.example.mobin.wallboo.LiveWallpaperService;
 import com.example.mobin.wallboo.R;
+import com.example.mobin.wallboo.utils.Constant;
 import com.google.android.material.snackbar.Snackbar;
 import com.jaeger.library.StatusBarUtil;
 import com.yarolegovich.discretescrollview.DSVOrientation;
@@ -23,6 +29,7 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +41,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by yarolegovich on 07.03.2017.
  */
 
-public class ShopActivity extends AppCompatActivity implements DiscreteScrollView.OnItemChangedListener,
+public class WallpaperShowActivity extends AppCompatActivity implements DiscreteScrollView.OnItemChangedListener,
         View.OnClickListener {
 
     private List<Item> data = new ArrayList<>();
@@ -76,7 +83,7 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
         itemPicker.addOnItemChangedListener(this);
 //        itemPicker.setOverScrollEnabled(false);
 //        itemPicker.set
-        infiniteAdapter = InfiniteScrollAdapter.wrap(new ShopAdapter(data));
+        infiniteAdapter = InfiniteScrollAdapter.wrap(new WallpaperShowAdapter(data));
         itemPicker.setAdapter(infiniteAdapter);
         itemPicker.setItemTransitionTimeMillis(150);
         itemPicker.setItemTransformer(new ScaleTransformer.Builder()
@@ -106,6 +113,42 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
 //                break;
             case R.id.home:
                 finish();
+                break;
+            case R.id.item_btn_buy:
+                // TODO:: new activity launch with intent flags
+
+
+                try {
+                    Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+                    intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(getApplicationContext(), LiveWallpaperService.class));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    FileOutputStream fos = null;
+                    try {
+                        fos = this.openFileOutput(
+                                Constant.CACHE, Context.MODE_PRIVATE);
+                        currentlyLoaded.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                        fos.flush();
+                        fos.close();
+                    } catch (Exception e) {
+
+                    }
+
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    currentlyLoaded.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+//                    byte[] bytes = outputStream.toByteArray();
+//                    intent.putExtra("wall_image", bytes);
+
+                    startActivity(intent);
+                    Toast.makeText(this, "NOT IN THE MOOD :/", Toast.LENGTH_LONG).show();
+                } catch (ActivityNotFoundException e) {
+                    try {
+                        startActivity(new Intent(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    } catch (ActivityNotFoundException e2) {
+                        Toast.makeText(this, "toasting everything :/", Toast.LENGTH_LONG).show();
+                    }
+                }
                 break;
 //            case R.id.btn_transition_time:
 //                DiscreteScrollViewOptions.configureTransitionTime(itemPicker);
@@ -153,6 +196,8 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
 //        findViewById(R.id.draw_here).setBackgroundDrawable(new BitmapDrawable());
     }
 
+    Bitmap currentlyLoaded = null;
+
     private void backDraw(String path) {
 //        findViewById(R.id.item_picker).get
         Glide.with(this.getApplicationContext())
@@ -165,7 +210,8 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        Bitmap bitmap = Blurrer.blur(getApplicationContext(), resource);
+//                        Bitmap bitmap = Blurrer.blur(getApplicationContext(), resource);
+                        currentlyLoaded = Bitmap.createBitmap(resource);
                         findViewById(R.id.draw_here).setBackground(new BitmapDrawable(resource));
 //                        getApplicationContext().getResources().getDrawable()
                     }
