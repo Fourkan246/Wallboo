@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -20,19 +19,19 @@ import com.example.mobin.wallboo.sensor.RotationSensor;
 public class LiveWallpaperService extends GLWallpaperService {
     public static final int SENSOR_RATE = 60;
     private final static String TAG = "LiveWallpaperService";
-    private Bitmap thiswallpaper = null;
+//    private Bitmap thiswallpaper = null;
 
     @Override
     public Engine onCreateEngine() {
-        MyEngine lala = new MyEngine();
-        lala.curr = thiswallpaper;
-        return lala;
+//        MyEngine lala = new MyEngine();
+//        lala.curr = thiswallpaper;
+        return new MyEngine();
     }
 
     private class MyEngine extends GLEngine implements LiveWallpaperRenderer.Callbacks,
             SharedPreferences.OnSharedPreferenceChangeListener, RotationSensor.Callback {
         private SharedPreferences preference;
-        private Bitmap curr = null;
+        //        private Bitmap curr = null;
         private LiveWallpaperRenderer renderer;
         private RotationSensor rotationSensor;
         private BroadcastReceiver powerSaverChangeReceiver;
@@ -156,20 +155,24 @@ public class LiveWallpaperService extends GLWallpaperService {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             switch (key) {
-                case "range":
-                    renderer.setBiasRange(sharedPreferences.getInt(key, 10));
+//                case "range":
+//                    renderer.setBiasRange(sharedPreferences.getInt(key, 10));
+//                    break;
+//                case "delay":
+//                    renderer.setDelay(21 - sharedPreferences.getInt(key, 10));
+//                    break;
+//                case "scroll":
+//                    renderer.setScrollMode(sharedPreferences.getBoolean(key, true));
+//                    break;
+//                case "power_saver":
+//                    setPowerSaverEnabled(sharedPreferences.getBoolean(key, true));
+//                    break;
+                case "clickporse":
+                    if (sharedPreferences.getBoolean("clickporse", true))
+                        renderer.setIsDefaultWallpaper(false);
                     break;
-                case "delay":
-                    renderer.setDelay(21 - sharedPreferences.getInt(key, 10));
+                default:
                     break;
-                case "scroll":
-                    renderer.setScrollMode(sharedPreferences.getBoolean(key, true));
-                    break;
-                case "power_saver":
-                    setPowerSaverEnabled(sharedPreferences.getBoolean(key, true));
-                    break;
-                case "default_picture":
-                    renderer.setIsDefaultWallpaper(sharedPreferences.getInt(key, 0) == 0);
             }
         }
 

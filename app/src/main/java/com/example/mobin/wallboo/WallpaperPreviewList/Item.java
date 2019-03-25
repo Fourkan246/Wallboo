@@ -1,9 +1,5 @@
 package com.example.mobin.wallboo.WallpaperPreviewList;
 
-/**
- * Created by yarolegovich on 07.03.2017.
- */
-
 public class Item {
 
     private final int id;

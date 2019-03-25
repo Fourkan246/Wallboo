@@ -1,13 +1,11 @@
 package com.example.mobin.wallboo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
-
 
 import com.google.android.material.navigation.NavigationView;
 import com.jaeger.library.StatusBarUtil;
@@ -37,8 +35,15 @@ public class MainActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("clickporse", false);
+        editor.commit();
         drawerLayout = findViewById(R.id.drawer_layout);
+//        startService(new Intent(getApplicationContext(), LiveWallpaperService.class));
 
         StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, getResources().getColor(R.color.primary));
 
@@ -80,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.string.titleD, DemoFragment.class)
                 .create());
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
 
-        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
+        SmartTabLayout viewPagerTab = findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
     }
 

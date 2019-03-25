@@ -5,10 +5,12 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,15 +39,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * Created by yarolegovich on 07.03.2017.
- */
 
 public class WallpaperShowActivity extends AppCompatActivity implements DiscreteScrollView.OnItemChangedListener,
         View.OnClickListener {
 
     private List<Item> data = new ArrayList<>();
     private Shop shop;
+    private int oldpicture = 0;
+    private SharedPreferences.Editor editor;
 
     private TextView currentItemName;
     private TextView currentItemPrice;
@@ -62,17 +63,19 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
 
         StatusBarUtil.setTranslucent(this);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(WallpaperShowActivity.this);
+        editor = sharedPreferences.edit();
+        editor.putBoolean("clickporse", false);
 
         intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         int pos = (int) bundle.get("position");
 
-        currentItemName = (TextView) findViewById(R.id.item_name);
-        currentItemPrice = (TextView) findViewById(R.id.item_price);
-        rateItemButton = (ImageView) findViewById(R.id.item_btn_rate);
+        currentItemName = findViewById(R.id.item_name);
+        currentItemPrice = findViewById(R.id.item_price);
+        rateItemButton = findViewById(R.id.item_btn_rate);
 
         shop = Shop.get();
-//        data = shop.getData();
 
         for (int i = pos; i < Constants.IMAGES.length && i < pos + 50; i++) {
             data.add(new Item(1, "abcd", "120$", Constants.IMAGES[i]));
@@ -81,8 +84,6 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
         itemPicker = findViewById(R.id.item_picker);
         itemPicker.setOrientation(DSVOrientation.HORIZONTAL);
         itemPicker.addOnItemChangedListener(this);
-//        itemPicker.setOverScrollEnabled(false);
-//        itemPicker.set
         infiniteAdapter = InfiniteScrollAdapter.wrap(new WallpaperShowAdapter(data));
         itemPicker.setAdapter(infiniteAdapter);
         itemPicker.setItemTransitionTimeMillis(150);
@@ -95,52 +96,52 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
         findViewById(R.id.item_btn_rate).setOnClickListener(this);
         findViewById(R.id.item_btn_buy).setOnClickListener(this);
         findViewById(R.id.item_btn_comment).setOnClickListener(this);
-
         findViewById(R.id.home).setOnClickListener(this);
-//        findViewById(R.id.btn_smooth_scroll).setOnClickListener(this);
-//        findViewById(R.id.btn_transition_time).setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.item_btn_rate:
-//                int realPosition = infiniteAdapter.getRealPosition(itemPicker.getCurrentItem());
-//                Item current = data.get(realPosition);
-//                shop.setRated(current.getId(), !shop.isRated(current.getId()));
-//                changeRateButtonState(current);
-//                break;
             case R.id.home:
                 finish();
                 break;
             case R.id.item_btn_buy:
-                // TODO:: new activity launch with intent flags
-
-
                 try {
-                    Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
-                    intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(getApplicationContext(), LiveWallpaperService.class));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    WallpaperManager wm = WallpaperManager.getInstance(getApplicationContext());
+                    if (wm.getWallpaperInfo() == null || !wm.getWallpaperInfo().getPackageName().equals(this
+                            .getPackageName())) {
+                        Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+                        intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(getApplicationContext(), LiveWallpaperService.class));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    FileOutputStream fos = null;
-                    try {
-                        fos = this.openFileOutput(
-                                Constant.CACHE, Context.MODE_PRIVATE);
-                        currentlyLoaded.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                        fos.flush();
-                        fos.close();
-                    } catch (Exception e) {
+                        FileOutputStream fos = null;
+                        try {
+                            fos = this.openFileOutput(
+                                    Constant.CACHE, Context.MODE_PRIVATE);
+                            currentlyLoaded.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                            fos.flush();
+                            fos.close();
+                        } catch (Exception e) {
 
+                        }
+                        startActivity(intent);
+                        Toast.makeText(this, "NOT IN THE MOOD :/", Toast.LENGTH_LONG).show();
+                    } else {
+                        FileOutputStream fos = null;
+                        try {
+                            fos = this.openFileOutput(
+                                    Constant.CACHE, Context.MODE_PRIVATE);
+                            currentlyLoaded.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                            fos.flush();
+                            fos.close();
+                        } catch (Exception e) {
+
+                        }
+                        editor.putBoolean("clickporse", true);
+                        editor.commit();
+                        Toast.makeText(getApplicationContext(), "mood kharap kore dilo :3", Toast.LENGTH_SHORT).show();
                     }
 
-//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                    currentlyLoaded.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-//                    byte[] bytes = outputStream.toByteArray();
-//                    intent.putExtra("wall_image", bytes);
-
-                    startActivity(intent);
-                    Toast.makeText(this, "NOT IN THE MOOD :/", Toast.LENGTH_LONG).show();
                 } catch (ActivityNotFoundException e) {
                     try {
                         startActivity(new Intent(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER)
@@ -150,12 +151,6 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
                     }
                 }
                 break;
-//            case R.id.btn_transition_time:
-//                DiscreteScrollViewOptions.configureTransitionTime(itemPicker);
-//                break;
-//            case R.id.btn_smooth_scroll:
-//                DiscreteScrollViewOptions.smoothScrollToUserSelectedPosition(itemPicker, v);
-//                break;
             default:
                 showUnsupportedSnackBar();
                 break;
@@ -169,14 +164,9 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
     }
 
     private void changeRateButtonState(Item item) {
-//        if (shop.isRated(item.getId())) {
-//            rateItemButton.setImageResource(R.drawable.ic_star_black_24dp);
-//            rateItemButton.setColorFilter(ContextCompat.getColor(this, R.color.shopRatedStar));
-//        } else {
-//            rateItemButton.setImageResource(R.drawable.ic_star_border_black_24dp);
-//            rateItemButton.setColorFilter(ContextCompat.getColor(this, R.color.shopSecondary));
-//        }
     }
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int position) {
@@ -192,28 +182,23 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
             }
         };
         handler.post(runnable);
-
-//        findViewById(R.id.draw_here).setBackgroundDrawable(new BitmapDrawable());
     }
 
     Bitmap currentlyLoaded = null;
 
     private void backDraw(String path) {
-//        findViewById(R.id.item_picker).get
         Glide.with(this.getApplicationContext())
                 .load(path)
                 .asBitmap()
                 .centerCrop()
                 .thumbnail(.1f)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .skipMemoryCache(false)
+                .skipMemoryCache(true)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                        Bitmap bitmap = Blurrer.blur(getApplicationContext(), resource);
                         currentlyLoaded = Bitmap.createBitmap(resource);
                         findViewById(R.id.draw_here).setBackground(new BitmapDrawable(resource));
-//                        getApplicationContext().getResources().getDrawable()
                     }
                 });
     }

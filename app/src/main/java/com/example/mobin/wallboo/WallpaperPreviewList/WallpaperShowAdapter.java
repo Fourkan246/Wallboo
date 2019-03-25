@@ -13,10 +13,6 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * Created by yarolegovich on 07.03.2017.
- */
-
 public class WallpaperShowAdapter extends RecyclerView.Adapter<WallpaperShowAdapter.ViewHolder> {
 
     private List<Item> data;
@@ -24,9 +20,6 @@ public class WallpaperShowAdapter extends RecyclerView.Adapter<WallpaperShowAdap
     public WallpaperShowAdapter(List<Item> data) {
         this.data = data;
     }
-
-//    private int position = 0;
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -40,14 +33,10 @@ public class WallpaperShowAdapter extends RecyclerView.Adapter<WallpaperShowAdap
         Glide.with(holder.itemView.getContext())
                 .load(data.get(position).getImage())
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .skipMemoryCache(false)
+                .skipMemoryCache(true)
                 .into(holder.image);
-//        this.position = position;
     }
 
-//    public int getPosition() {
-//        return position;
-//    }
 
     @Override
     public int getItemCount() {
@@ -60,7 +49,7 @@ public class WallpaperShowAdapter extends RecyclerView.Adapter<WallpaperShowAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.image);
+            image = itemView.findViewById(R.id.image);
         }
     }
 }

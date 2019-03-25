@@ -1,11 +1,13 @@
 package com.example.mobin.wallboo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.mobin.wallboo.utils.Constant;
@@ -63,12 +65,15 @@ class LiveWallpaperRenderer implements GLSurfaceView.Renderer {
     private boolean isDefaultWallpaper;
     private float preA;
     private float preB;
-    public Bitmap thisImage = null;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+//    public Bitmap thisImage = null;
 
     LiveWallpaperRenderer(Context context, Callbacks callbacks) {
-
         mContext = context;
         mCallbacks = callbacks;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = sharedPreferences.edit();
     }
 
     void release() {
@@ -209,6 +214,8 @@ class LiveWallpaperRenderer implements GLSurfaceView.Renderer {
         isDefaultWallpaper = isDefault;
         needsRefreshWallpaper = true;
 //        loadTexture();
+        editor.putBoolean("clickporse", false);
+        editor.commit();
         mCallbacks.requestRender();
     }
 
@@ -245,37 +252,32 @@ class LiveWallpaperRenderer implements GLSurfaceView.Renderer {
     }
 
     private void loadTexture() {
-        // Bitmap bitmap = null;
-        if (thisImage != null) {
-            if (wallpaper != null)
-                wallpaper.destroy();
-            wallpaper = new Wallpaper(cropBitmap1(thisImage));
 
-        } else {
-            InputStream is = null;
-//            if (!isDefaultWallpaper) {
-            try {
-                is = mContext.openFileInput(Constant.CACHE);
-            } catch (FileNotFoundException e) {
-                isDefaultWallpaper = true;
-            }
+        InputStream is = null;
+//        if (!isDefaultWallpaper) {
+        try {
+            is = mContext.openFileInput(Constant.CACHE);
+        } catch (FileNotFoundException e) {
+//            isDefaultWallpaper = true;
+        }
+//        } else {
 //
-            if (is == null) {
-                try {
-                    is = mContext.getAssets().open(Constant.DEFAULT);
-                } catch (Exception e) {
-
-                }
-            }
-            if (wallpaper != null)
-                wallpaper.destroy();
-            wallpaper = new Wallpaper(cropBitmap(is));
-            preCalculate();
+        if (is == null) {
             try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                is = mContext.getAssets().open(Constant.DEFAULT);
+            } catch (Exception e) {
+
             }
+        }
+//        }
+        if (wallpaper != null)
+            wallpaper.destroy();
+        wallpaper = new Wallpaper(cropBitmap(is));
+        preCalculate();
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         System.gc();
