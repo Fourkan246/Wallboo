@@ -55,24 +55,11 @@ public class MainActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.framer, new TabbedViewFragment()).commit();
-
-/*        FragmentTransaction nn = getSupportFragmentManager().beginTransaction();
-        nn.replace(R.id.framer, new TabbedViewFragment());
-//        nn.addToBackStack(null);
-        nn.commit();*/
 
 
         Fragment fr = new TabbedViewFragment();
         Fragment frVideo = new DemoFragment();
 
-
-        //openFragment(fr);
-    /*    FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.framer, fr);
-        //transaction.addToBackStack(null);
-        transaction.commit();*/
         openFragment(fr, true);
 
 
@@ -100,19 +87,13 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_gallery:
 
-                                if(checkFragment==true)
+                                if (checkFragment)
                                     break;
-
                                 checkFragment = true;
-
 
                                 Fragment frVideo = new DemoFragment();
                                 openFragment(frVideo, false);
 
-                                //openFragment(fr);
-
-
-//                                getSupportFragmentManager().beginTransaction().replace(R.id.framer, new DemoFragment()).commit();
                                 break;
                         }
                         // close drawer when item is tapped
