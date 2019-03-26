@@ -50,7 +50,7 @@ public class DemoFragment extends Fragment {
 
         //listView.getLayoutParams();
 
-        ((GridView) listView).setAdapter(new ImageAdapter(getActivity()));
+        listView.setAdapter(new ImageAdapter(getActivity()));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -83,7 +83,7 @@ public class DemoFragment extends Fragment {
                     .showImageOnLoading(R.drawable.ic_stub)
                     .showImageForEmptyUri(R.drawable.ic_empty)
                     .showImageOnFail(R.drawable.ic_error)
-                    .cacheInMemory(true)
+                    .cacheInMemory(false)
                     .cacheOnDisk(true)
                     .considerExifParams(true)
                     .bitmapConfig(Bitmap.Config.RGB_565)
@@ -113,8 +113,8 @@ public class DemoFragment extends Fragment {
                 view = inflater.inflate(R.layout.item_grid_image, parent, false);
                 holder = new ViewHolder();
                 assert view != null;
-                holder.imageView = (ImageView) view.findViewById(R.id.image);
-                holder.progressBar = (ProgressBar) view.findViewById(R.id.progress);
+                holder.imageView = view.findViewById(R.id.image);
+                holder.progressBar = view.findViewById(R.id.progress);
                 view.setTag(holder);
             } else {
                 holder = (ViewHolder) view.getTag();
