@@ -50,6 +50,8 @@ dependencies {
 
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'org.apache.commons:commons-collections4:4.1'
+
+    implementation 'com.dingmouren.videowallpaper:videowallpaper:1.0.1'
 //    implementation 'android.support.v8.renderscript.*'
 }
 

@@ -33,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        checkFragment = false;
+
         setContentView(R.layout.activity_main);
+
+        checkFragment = false;
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -56,9 +58,8 @@ public class MainActivity extends AppCompatActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
 
-
         Fragment fr = new TabbedViewFragment();
-        Fragment frVideo = new DemoFragment();
+        Fragment frVideo = new VideoListFragment();
 
         openFragment(fr, true);
 
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 checkFragment = true;
 
-                                Fragment frVideo = new DemoFragment();
+                                Fragment frVideo = new VideoListFragment();
                                 openFragment(frVideo, false);
 
                                 break;
@@ -109,26 +110,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void openFragment(final Fragment fragment, boolean noBack)   {
+    private void openFragment(final Fragment fragment, boolean noBack) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.framer, fragment);
-        if(noBack)
-        {
+        if (noBack) {
             transaction.disallowAddToBackStack();
-        }else{
+        } else {
             transaction.addToBackStack(null);
         }
-
-
         transaction.commit();
-
     }
 
     @Override
     public void onBackPressed() {
-                checkFragment = false;
-                super.onBackPressed();
+        checkFragment = false;
+        super.onBackPressed();
     }
 
 
