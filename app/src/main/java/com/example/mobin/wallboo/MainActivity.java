@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
-    private Boolean checkFragment = false;
+    private Boolean checkFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +57,24 @@ public class MainActivity extends AppCompatActivity {
 
 //        getSupportFragmentManager().beginTransaction().replace(R.id.framer, new TabbedViewFragment()).commit();
 
-        FragmentTransaction nn = getSupportFragmentManager().beginTransaction();
+/*        FragmentTransaction nn = getSupportFragmentManager().beginTransaction();
         nn.replace(R.id.framer, new TabbedViewFragment());
 //        nn.addToBackStack(null);
-        nn.commit();
+        nn.commit();*/
+
+
+        Fragment fr = new TabbedViewFragment();
+        Fragment frVideo = new DemoFragment();
+
+
+        //openFragment(fr);
+    /*    FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.framer, fr);
+        //transaction.addToBackStack(null);
+        transaction.commit();*/
+        openFragment(fr, true);
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -75,25 +90,28 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.nav_camera:
                                 if (checkFragment == false) break;
-//                                fragment = getSupportFragmentManager().findFragmentById(R.id.framer);
-//                                if (fragment != null)
-//                                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.framer, new TabbedViewFragment());
-//                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
-//                                getSupportFragmentManager().beginTransaction().replace(R.id.framer, new TabbedViewFragment()).commit();
+
+                                onBackPressed();
+                                checkFragment = false;
+
+                                //Fragment tabbedFr = new TabbedViewFragment();
+                                //openFragment(tabbedFr, true);
+
                                 break;
                             case R.id.nav_gallery:
-                                checkFragment = true;
-//                                fragment = getSupportFragmentManager().findFragmentById(R.id.framer);
-//                                if (fragment != null)
-//                                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 
-                                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.framer, new DemoFragment());
-                                fragmentTransaction.addToBackStack(null);
-                                fragmentTransaction.commit();
+                                if(checkFragment==true)
+                                    break;
+
+                                checkFragment = true;
+
+
+                                Fragment frVideo = new DemoFragment();
+                                openFragment(frVideo, false);
+
+                                //openFragment(fr);
+
+
 //                                getSupportFragmentManager().beginTransaction().replace(R.id.framer, new DemoFragment()).commit();
                                 break;
                         }
@@ -107,6 +125,29 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+
+    private void openFragment(final Fragment fragment, boolean noBack)   {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.framer, fragment);
+        if(noBack)
+        {
+            transaction.disallowAddToBackStack();
+        }else{
+            transaction.addToBackStack(null);
+        }
+
+
+        transaction.commit();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+                checkFragment = false;
+                super.onBackPressed();
     }
 
 
