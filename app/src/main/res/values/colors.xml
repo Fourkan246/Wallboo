@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="demo_back">#092E4A</color>
+    <color name="nav_menu">#092E4A</color>
 
     <color name="primary">#EF5560</color>
 
@@ -52,22 +53,11 @@
     <color name="nav_bar_color">#00B8D4</color>
 
 
-
-
-
-
-
-
-
     <color name="grayIconTint">#727272</color>
     <color name="shopAccent">#84ceca</color>
     <color name="shopSecondary">#727272</color>
     <color name="shopRatedStar">#ffeb5a</color>
     <color name="shopFabRipple">#51b2ac</color>
-
-
-
-
 
 
     <integer-array name="custom_tab_colors">

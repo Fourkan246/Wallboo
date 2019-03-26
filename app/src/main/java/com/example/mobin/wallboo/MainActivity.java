@@ -9,11 +9,6 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.jaeger.library.StatusBarUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,13 +16,15 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private DrawerLayout drawerLayout;
 
+    private Boolean checkFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +32,20 @@ public class MainActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
+        checkFragment = false;
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("clickporse", false);
         editor.commit();
+
+
         drawerLayout = findViewById(R.id.drawer_layout);
 //        startService(new Intent(getApplicationContext(), LiveWallpaperService.class));
 
         StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, getResources().getColor(R.color.primary));
 
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
 
         /// tool bar add r sheita action bar er feature kisu support kora
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -56,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
+//        getSupportFragmentManager().beginTransaction().replace(R.id.framer, new TabbedViewFragment()).commit();
+
+        FragmentTransaction nn = getSupportFragmentManager().beginTransaction();
+        nn.replace(R.id.framer, new TabbedViewFragment());
+//        nn.addToBackStack(null);
+        nn.commit();
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -66,9 +70,35 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
                         menuItem.setChecked(true);
+                        Fragment fragment = null;
+                        FragmentTransaction fragmentTransaction = null;
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_camera:
+                                if (checkFragment == false) break;
+//                                fragment = getSupportFragmentManager().findFragmentById(R.id.framer);
+//                                if (fragment != null)
+//                                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.framer, new TabbedViewFragment());
+//                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+//                                getSupportFragmentManager().beginTransaction().replace(R.id.framer, new TabbedViewFragment()).commit();
+                                break;
+                            case R.id.nav_gallery:
+                                checkFragment = true;
+//                                fragment = getSupportFragmentManager().findFragmentById(R.id.framer);
+//                                if (fragment != null)
+//                                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+
+                                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.framer, new DemoFragment());
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+//                                getSupportFragmentManager().beginTransaction().replace(R.id.framer, new DemoFragment()).commit();
+                                break;
+                        }
                         // close drawer when item is tapped
                         drawerLayout.closeDrawers();
-
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
 
@@ -77,19 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-                getSupportFragmentManager(), FragmentPagerItems.with(this)
-                .add(R.string.titleA, DemoFragment.class)
-                .add(R.string.titleB, DemoFragment.class)
-                .add(R.string.titleC, DemoFragment.class)
-                .add(R.string.titleD, DemoFragment.class)
-                .create());
-
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(adapter);
-
-        SmartTabLayout viewPagerTab = findViewById(R.id.viewpagertab);
-        viewPagerTab.setViewPager(viewPager);
     }
 
 
@@ -99,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

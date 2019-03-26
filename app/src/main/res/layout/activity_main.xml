@@ -25,40 +25,10 @@
                 app:titleTextColor="@color/white" />
 
 
-            <RelativeLayout
+            <FrameLayout
+                android:id="@+id/framer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.ogaclejapan.smarttablayout.SmartTabLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/viewpagertab"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/tab_height"
-                    android:background="@color/primary"
-                    android:clipToPadding="false"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-
-                    app:stl_defaultTabTextColor="@color/white"
-                    app:stl_defaultTabTextHorizontalPadding="18dp"
-                    app:stl_dividerColor="@color/transparent"
-                    app:stl_dividerThickness="0dp"
-                    app:stl_indicatorColor="@color/black_20"
-                    app:stl_indicatorCornerRadius="18dp"
-                    app:stl_indicatorGravity="center"
-                    app:stl_indicatorInterpolation="smart"
-                    app:stl_indicatorThickness="36dp"
-                    app:stl_titleOffset="auto_center"
-                    app:stl_underlineColor="@color/transparent"
-                    app:stl_underlineThickness="0dp" />
-
-
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/viewpager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/viewpagertab" />
-            </RelativeLayout>
+                android:layout_height="match_parent"></FrameLayout>
         </LinearLayout>
 
     </FrameLayout>
@@ -69,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/nav_back"
+        android:background="@color/demo_back"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_view" />
