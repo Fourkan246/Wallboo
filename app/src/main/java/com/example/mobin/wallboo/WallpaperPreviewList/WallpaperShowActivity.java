@@ -44,7 +44,7 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
         View.OnClickListener {
 
     private List<Item> data = new ArrayList<>();
-    private Shop shop;
+    private Wallpapers shop;
     private int oldpicture = 0;
     private SharedPreferences.Editor editor;
 
@@ -75,7 +75,7 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
         currentItemPrice = findViewById(R.id.item_price);
         rateItemButton = findViewById(R.id.item_btn_rate);
 
-        shop = Shop.get();
+        shop = Wallpapers.get();
 
         for (int i = pos; i < Constants.IMAGES.length && i < pos + 50; i++) {
             data.add(new Item(1, "abcd", "120$", Constants.IMAGES[i]));

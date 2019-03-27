@@ -60,11 +60,11 @@ public class AutoWallpaperChangeService extends Service {
                 try {
                     long r = rd.nextLong();
                     if (r % 3 == 0) {
-                        wallpaperManager.setResource(R.drawable.shop1);
+//                        wallpaperManager.setResource(R.drawable.shop1);
                     } else if (r % 2 == 0) {
-                        wallpaperManager.setResource(R.drawable.shop4);
+//                        wallpaperManager.setResource(R.drawable.shop4);
                     } else {
-                        wallpaperManager.setResource(R.drawable.shop6);
+//                        wallpaperManager.setResource(R.drawable.shop6);
                     }
                 } catch (Exception e) {
 

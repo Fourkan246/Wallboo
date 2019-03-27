@@ -6,6 +6,7 @@ android {
         applicationId "com.example.mobin.wallboo"
         minSdkVersion 19
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,8 +18,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -57,6 +59,8 @@ dependencies {
     implementation 'im.ene.toro3:toro-ext-exoplayer:3.6.2.2804'
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+
+    implementation 'androidx.multidex:multidex:2.0.0'
 }
 
 configurations.all {

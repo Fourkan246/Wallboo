@@ -4,8 +4,6 @@ package com.example.mobin.wallboo;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,11 +21,20 @@ final class MediaList extends ArrayList<Content.Media> {
     private Context context;
     private ArrayList<String> videolist = new ArrayList<>();
     int i = 65, ii = 0;
-    private ArrayList<String> fake = new ArrayList<>();
+//    private ArrayList<String> fake = new ArrayList<>();
 
     MediaList(Context context) {
         this.context = context;
+//        AsyncTask<String, String, String> stringStringAsyncTask = new AsyncTask<String, String, String>() {
+//            @Override
+//            protected String doInBackground(String... strings) {
+//                govt();
+//                Toast.makeText(context, "toasting", Toast.LENGTH_SHORT).show();
+//                return "finished";
+//            }
+//        }.execute("lala", "lala", "lala");
         govt();
+
     }
 
     void govt() {
@@ -48,18 +55,15 @@ final class MediaList extends ArrayList<Content.Media> {
 
         videolist = new ArrayList<>(vdlist);
 
-        Toast.makeText(context, videolist.size() + " ala", Toast.LENGTH_LONG).show();
-
-//        Content.ITEMS = (String[]) videolist.toArray();
-        Content.ITEMS = new String[videolist.size()];
+        Content.ITEMS = new String[videolist.size() + 1];
         ii = 0;
         for (String uri : videolist) {
-//            fake.add(ii + ".png");
             Content.ITEMS[ii] = uri;
             ii++;
         }
+        Content.ITEMS[ii] = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
-        Log.e("getview", "govt: " + ii);
+//        Log.e("getview", "govt: " + ii);
 
     }
 

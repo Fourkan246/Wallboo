@@ -2,10 +2,6 @@ package com.example.mobin.wallboo;
 
 import android.net.Uri;
 
-/**
- * @author eneim (7/1/17).
- */
-
 public class Content {
 
     private static final String MP4_BUNNY = "file:///storage/emulated/0/video/one.mp4";

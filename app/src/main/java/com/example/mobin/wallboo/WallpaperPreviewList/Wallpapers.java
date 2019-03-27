@@ -4,13 +4,13 @@ package com.example.mobin.wallboo.WallpaperPreviewList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Shop {
-    public static Shop get() {
-        return new Shop();
+public class Wallpapers {
+    public static Wallpapers get() {
+        return new Wallpapers();
     }
 
 
-    private Shop() {
+    private Wallpapers() {
     }
 
     public List<Item> getData() {
