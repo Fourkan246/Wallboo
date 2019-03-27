@@ -40,7 +40,7 @@ public class ToroVideoListFragment extends Fragment {
         selector = new PressablePlayerSelector(container1);
         container1.setPlayerSelector(selector);
 
-        adapter = new BasicListAdapter(selector);
+        adapter = new BasicListAdapter(selector, view.getContext());
         container1.setAdapter(adapter);
 
         return view;

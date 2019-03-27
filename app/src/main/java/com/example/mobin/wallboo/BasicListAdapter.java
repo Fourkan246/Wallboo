@@ -1,5 +1,6 @@
 package com.example.mobin.wallboo;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,14 @@ import im.ene.toro.widget.PressablePlayerSelector;
 class BasicListAdapter extends RecyclerView.Adapter<BasicPlayerViewHolder> {
 
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") //
-    private MediaList mediaList = new MediaList();
+    private MediaList mediaList;
 
     @Nullable
     private final PressablePlayerSelector selector;
 
-    BasicListAdapter(@Nullable PressablePlayerSelector selector) {
+    BasicListAdapter(@Nullable PressablePlayerSelector selector, @NonNull Context context) {
         this.selector = selector;
+        mediaList = new MediaList(context);
     }
 
     @NonNull
@@ -30,6 +32,7 @@ class BasicListAdapter extends RecyclerView.Adapter<BasicPlayerViewHolder> {
     public BasicPlayerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(BasicPlayerViewHolder.LAYOUT_RES, parent, false);
+
         BasicPlayerViewHolder viewHolder = new BasicPlayerViewHolder(view, this.selector);
         if (this.selector != null) viewHolder.itemView.setOnLongClickListener(this.selector);
         return viewHolder;

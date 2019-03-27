@@ -12,7 +12,7 @@ public class Content {
     private static final String MP4_TOS = "file:///storage/emulated/0/video/two.mp4";
     private static final String MP4_COSMOS = "file:///storage/emulated/0/video/three.mp4";
 
-    static final String[] ITEMS = {MP4_TOS, MP4_BUNNY, MP4_COSMOS};
+    static String[] ITEMS;
 
 
     public static class Media {

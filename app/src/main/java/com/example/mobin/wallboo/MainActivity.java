@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Fragment fr = new TabbedViewFragment();
-        Fragment frVideo = new VideoListFragment();
+        Fragment frVideo = new ToroVideoListFragment();
 
         openFragment(fr, true);
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 checkFragment = true;
 
-                                Fragment frVideo = new VideoListFragment();
+                                Fragment frVideo = new ToroVideoListFragment();
                                 openFragment(frVideo, false);
 
                                 break;
@@ -105,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-
     }
 
 
