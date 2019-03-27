@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_gallery:
 
-                                drawerLayout.closeDrawer(GravityCompat.START);
+                                drawerLayout.closeDrawers();
 
                                 if (checkFragment)
                                     break;

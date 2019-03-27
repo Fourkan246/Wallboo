@@ -23,17 +23,17 @@ final class MediaList extends ArrayList<Content.Media> {
     int i = 65, ii = 0;
 //    private ArrayList<String> fake = new ArrayList<>();
 
-    MediaList(Context context) {
+    MediaList(Context context, ArrayList<String> videolist) {
         this.context = context;
-//        AsyncTask<String, String, String> stringStringAsyncTask = new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... strings) {
-//                govt();
-//                Toast.makeText(context, "toasting", Toast.LENGTH_SHORT).show();
-//                return "finished";
-//            }
-//        }.execute("lala", "lala", "lala");
-        govt();
+
+        Content.ITEMS = new String[videolist.size() + 1];
+        ii = 0;
+        for (String uri : videolist) {
+            Content.ITEMS[ii] = uri;
+            ii++;
+        }
+        Content.ITEMS[ii] = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+//        govt();
 
     }
 

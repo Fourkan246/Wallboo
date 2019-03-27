@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +21,10 @@ class BasicListAdapter extends RecyclerView.Adapter<BasicPlayerViewHolder> {
     private final PressablePlayerSelector selector;
     private Context context;
 
-    BasicListAdapter(@Nullable PressablePlayerSelector selector, @NonNull Context context) {
+    BasicListAdapter(@Nullable PressablePlayerSelector selector, @NonNull Context context, @NonNull ArrayList<String> videoList) {
         this.selector = selector;
         this.context = context;
-        mediaList = new MediaList(context);
+        mediaList = new MediaList(context, videoList);
     }
 
     @NonNull
