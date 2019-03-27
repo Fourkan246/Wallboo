@@ -3,7 +3,9 @@ package com.example.mobin.wallboo;
 
 import android.net.Uri;
 import android.view.View;
+import android.widget.Toast;
 
+import com.dingmouren.videowallpaper.VideoWallpaper;
 import com.google.android.exoplayer2.ui.PlayerView;
 
 import androidx.annotation.NonNull;
@@ -37,11 +39,20 @@ class BasicPlayerViewHolder extends RecyclerView.ViewHolder implements ToroPlaye
     @BindView(R.id.player)
     PlayerView playerView;
 
+
     public BasicPlayerViewHolder(View itemView, PressablePlayerSelector selector) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         if (selector != null)
             playerView.setControlDispatcher(new ExoPlayerDispatcher(selector, this));
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VideoWallpaper videoWallpaper = new VideoWallpaper();
+                videoWallpaper.setToWallPaper(itemView.getContext(), mediaUri.toString());
+                Toast.makeText(itemView.getContext(), "paise ;/", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @NonNull

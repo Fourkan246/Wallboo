@@ -65,12 +65,16 @@ final class MediaList extends ArrayList<Content.Media> {
 
     @Override
     public int size() {
-        return Integer.MAX_VALUE;
+        return Content.ITEMS.length;
     }
 
     @Override
     public Content.Media get(int index) {
         return Content.Media.getItem(index);
+    }
+
+    public String getURI(int position) {
+        return Content.ITEMS[position];
     }
 
     @Override
