@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    app:cardBackgroundColor="@color/demo_back"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="1dp">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="231dp"
+        app:player_layout_id="@layout/toro_exo_player_view"
+        app:resize_mode="fixed_height"
+        app:surface_type="texture_view"
+        app:use_controller="true" />
+
+</androidx.cardview.widget.CardView>

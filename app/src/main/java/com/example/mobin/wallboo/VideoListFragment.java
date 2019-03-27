@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.dingmouren.videowallpaper.VideoWallpaper;
@@ -40,45 +42,29 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.loader.content.CursorLoader;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class VideoListFragment extends Fragment {
 
     protected AbsListView listView;
 
     public VideoListFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_video_list, container, false);
 
         listView = (GridView) rootView.findViewById(R.id.grid);
-
-        //listView.getLayoutParams();
 
         VideoAdapter videoAdapter = new VideoAdapter(getActivity());
         listView.setAdapter(videoAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //startImagePagerActivity(position);
                 Toast.makeText(getActivity(), "" + position, Toast.LENGTH_LONG).show();
-
                 VideoWallpaper videoWallpaper = new VideoWallpaper();
                 videoWallpaper.setToWallPaper(getContext(), videoAdapter.videolist.get(position));
-
-//                Intent intent = new Intent(getActivity(), WallpaperShowActivity.class);
-//                intent.putExtra("position", position);
-//                startActivity(intent);
-
-
             }
         });
 
@@ -88,7 +74,9 @@ public class VideoListFragment extends Fragment {
 
     private static class VideoAdapter extends BaseAdapter {
 
+        private Context context;
         int i = 65;
+        int ii = 65;
         private static String[] IMAGE_URLS;
         private ArrayList<String> videolist = new ArrayList<>();
         private LayoutInflater inflater;
@@ -98,10 +86,7 @@ public class VideoListFragment extends Fragment {
         private ArrayList<String> fake = new ArrayList<>();
 
         VideoAdapter(Context context) {
-
-
-//            IMAGE_URLS = (String[]) videolist.toArray();
-
+            this.context = context;
             inflater = LayoutInflater.from(context);
 
             options = new DisplayImageOptions.Builder()
@@ -114,7 +99,10 @@ public class VideoListFragment extends Fragment {
                     .bitmapConfig(Bitmap.Config.RGB_565)
                     .build();
 
+            govt();
+        }
 
+        void govt() {
             String[] projection = {MediaStore.Video.VideoColumns.DATA, MediaStore.Video.Media.DISPLAY_NAME};
             Cursor cursor = new CursorLoader(context, MediaStore.Video.Media.EXTERNAL_CONTENT_URI, projection, null, null, null).loadInBackground();
 
@@ -135,30 +123,36 @@ public class VideoListFragment extends Fragment {
             Toast.makeText(context, videolist.size() + " ala", Toast.LENGTH_LONG).show();
 
             for (String uri : videolist) {
-                fake.add(i + ".png");
-                nameTouri.put(i + "", uri);
+                fake.add(ii + ".png");
+                nameTouri.put(ii + "", uri);
                 Glide.with(context)
                         .load(uri)
                         .asBitmap()
                         .thumbnail(0.1f)
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                                 FileOutputStream fos = null;
                                 try {
                                     fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/" +
-                                            i + ".png"));
-                                    i++;
-
-                                    resource.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                                            (ii) + ".png"));
+                                    resource.compress(Bitmap.CompressFormat.JPEG, 10, fos);
                                     fos.flush();
                                     fos.close();
+                                    Log.e("getview", "onResourceReady: " + i);
+
+                                    Toast.makeText(context, "this one is done " + i, Toast.LENGTH_LONG).show();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
                         });
+                ii++;
             }
+
+            Log.e("getview", "govt: " + ii);
 
         }
 
@@ -181,6 +175,8 @@ public class VideoListFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
             View view = convertView;
+//            govt();
+
             if (view == null) {
                 view = inflater.inflate(R.layout.item_grid_image, parent, false);
                 holder = new ViewHolder();
@@ -191,15 +187,6 @@ public class VideoListFragment extends Fragment {
             } else {
                 holder = (ViewHolder) view.getTag();
             }
-
-//            while (i != 65 + videolist.size()) {
-//                try {
-//                    Thread.sleep(20);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-
             ImageLoader.getInstance()
                     .displayImage("file://" + Environment.getExternalStorageDirectory() + "/" + fake.get(position), holder.imageView, options, new SimpleImageLoadingListener() {
                         @Override
