@@ -5,16 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dingmouren.videowallpaper.VideoWallpaper;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import im.ene.toro.widget.PressablePlayerSelector;
-
-/**
- * @author eneim (7/1/17).
- */
 
 class BasicListAdapter extends RecyclerView.Adapter<BasicPlayerViewHolder> {
 
@@ -23,9 +17,11 @@ class BasicListAdapter extends RecyclerView.Adapter<BasicPlayerViewHolder> {
 
     @Nullable
     private final PressablePlayerSelector selector;
+    private Context context;
 
     BasicListAdapter(@Nullable PressablePlayerSelector selector, @NonNull Context context) {
         this.selector = selector;
+        this.context = context;
         mediaList = new MediaList(context);
     }
 
@@ -35,16 +31,9 @@ class BasicListAdapter extends RecyclerView.Adapter<BasicPlayerViewHolder> {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(BasicPlayerViewHolder.LAYOUT_RES, parent, false);
 
-
         BasicPlayerViewHolder viewHolder = new BasicPlayerViewHolder(view, this.selector);
         if (this.selector != null) viewHolder.itemView.setOnLongClickListener(this.selector);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                VideoWallpaper videoWallpaper = new VideoWallpaper();
-                videoWallpaper.setToWallPaper(view.getContext(), mediaList.getURI(0));
-            }
-        });
+
 
         return viewHolder;
     }
@@ -52,26 +41,6 @@ class BasicListAdapter extends RecyclerView.Adapter<BasicPlayerViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull BasicPlayerViewHolder holder, int position) {
         holder.bind(mediaList.get(position));
-
-//        PlayerView playerView = holder.itemView.findViewById(R.id.player);
-
-//        CardView cardView = holder.itemView.findViewById(R.id.card);
-//
-//        holder.getPlayerView().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                VideoWallpaper videoWallpaper = new VideoWallpaper();
-//                videoWallpaper.setToWallPaper(holder.itemView.getContext(), holder.mediaUri.toString());
-//            }
-//        });
-
-//        cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
     }
 
     @Override

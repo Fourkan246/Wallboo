@@ -3,6 +3,7 @@ package com.example.mobin.wallboo;
 
 import android.net.Uri;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.dingmouren.videowallpaper.VideoWallpaper;
@@ -21,12 +22,6 @@ import im.ene.toro.media.PlaybackInfo;
 import im.ene.toro.widget.Container;
 import im.ene.toro.widget.PressablePlayerSelector;
 
-/**
- * @author eneim (7/1/17).
- */
-
-@SuppressWarnings({"WeakerAccess", "unused"})
-        //
 class BasicPlayerViewHolder extends RecyclerView.ViewHolder implements ToroPlayer {
 
     private static final String TAG = "Toro:Basic:Holder";
@@ -39,13 +34,16 @@ class BasicPlayerViewHolder extends RecyclerView.ViewHolder implements ToroPlaye
     @BindView(R.id.player)
     PlayerView playerView;
 
+    @BindView(R.id.setter)
+    Button button;
+
 
     public BasicPlayerViewHolder(View itemView, PressablePlayerSelector selector) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         if (selector != null)
             playerView.setControlDispatcher(new ExoPlayerDispatcher(selector, this));
-        itemView.setOnClickListener(new View.OnClickListener() {
+        itemView.findViewById(R.id.setter).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 VideoWallpaper videoWallpaper = new VideoWallpaper();
@@ -116,4 +114,5 @@ class BasicPlayerViewHolder extends RecyclerView.ViewHolder implements ToroPlaye
     void bind(Content.Media media) {
         this.mediaUri = media.mediaUri;
     }
+
 }
