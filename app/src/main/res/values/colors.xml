@@ -59,6 +59,7 @@
     <color name="shopRatedStar">#ffeb5a</color>
     <color name="shopFabRipple">#51b2ac</color>
 
+    <color name="yourTranslucentColor">#29000000</color>
 
     <integer-array name="custom_tab_colors">
 

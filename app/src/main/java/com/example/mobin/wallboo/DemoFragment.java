@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class DemoFragment extends Fragment {
 
     protected AbsListView listView;

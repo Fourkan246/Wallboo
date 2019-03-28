@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         FragmentTransaction fragmentTransaction = null;
                         switch (menuItem.getItemId()) {
                             case R.id.nav_camera:
-                                if (checkFragment == false) break;
+                                if (!checkFragment) break;
 
                                 onBackPressed();
                                 checkFragment = false;

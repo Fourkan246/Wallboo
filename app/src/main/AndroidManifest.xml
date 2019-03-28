@@ -25,7 +25,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/FullscreenTheme">
-        <activity android:name=".test_activity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WallpaperPreviewList.WallpaperShowActivity" />
+        <activity android:name=".WallpaperPreviewList.BackgroundSetActivity" />
 
         <service
             android:name=".LiveWallpaperService"
@@ -51,19 +51,7 @@
                 android:resource="@xml/wallpaper" />
         </service>
 
-        <service
-            android:name=".AutoWallpaperChangeService"
-            android:enabled="true" />
 
-        <receiver
-            android:name=".Autobroadcaster"
-            android:enabled="true"
-            android:exported="true"
-            android:label="restarter">
-            <intent-filter>
-                <action android:name="auto.wallpaper.service.restart" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

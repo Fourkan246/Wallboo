@@ -32,6 +32,7 @@ import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
     private InfiniteScrollAdapter infiniteAdapter;
 
     Intent intent;
+    Bitmap currentlyLoaded = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,8 +108,10 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
                 finish();
                 break;
             case R.id.item_btn_buy:
-                try {
+
+                /*try {
                     WallpaperManager wm = WallpaperManager.getInstance(getApplicationContext());
+
                     if (wm.getWallpaperInfo() == null || !wm.getWallpaperInfo().getPackageName().equals(this
                             .getPackageName())) {
                         Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
@@ -149,7 +153,22 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
                     } catch (ActivityNotFoundException e2) {
                         Toast.makeText(this, "toasting everything :/", Toast.LENGTH_LONG).show();
                     }
-                }
+                }*/
+
+
+               /* WallpaperManager myWallpaperManager
+                        = WallpaperManager.getInstance(getApplicationContext());
+                try {
+                    myWallpaperManager.setBitmap(currentlyLoaded);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }*/
+
+                Intent intent = new Intent(getApplicationContext(), BackgroundSetActivity.class);
+                BackgroundSetActivity.bm = currentlyLoaded;
+                startActivity(intent);
+
                 break;
             default:
                 showUnsupportedSnackBar();
@@ -184,7 +203,6 @@ public class WallpaperShowActivity extends AppCompatActivity implements Discrete
         handler.post(runnable);
     }
 
-    Bitmap currentlyLoaded = null;
 
     private void backDraw(String path) {
         Glide.with(this.getApplicationContext())
