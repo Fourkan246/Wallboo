@@ -1,3 +1,3 @@
 "# Wallboo" 
 
-A android based wallpaper application
+An android based wallpaper application
